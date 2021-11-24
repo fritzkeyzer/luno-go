@@ -1315,3 +1315,46 @@ func (cl *Client) UpdateAccountName(ctx context.Context, req *UpdateAccountNameR
 }
 
 // vi: ft=go
+
+
+
+// GetCandlesRequest is the request struct for GetCandles.
+type GetCandlesRequest struct {
+	// Currency pair
+	//
+	// required: true
+	Pair string `json:"pair" url:"pair"`
+	
+	// Account ID - Filter to candles starting on or after this timestamp (Unix milliseconds). Only up to 1000 of the earliest candles are returned.
+	//
+	// required: true
+	Since int64 `json:"since" url:"since"`
+
+	// Duration - Candle duration in seconds. For example, 300 corresponds to 5m candles. 
+	//     Currently supported durations are: 60 (1m), 300 (5m), 900 (15m), 1800 (30m), 
+	//     3600 (1h), 10800 (3h), 14400 (4h), 28800 (8h), 86400 (24h), 259200 (3d), 604800 (7d).
+	//
+	// required: true
+	Duration int64 `json:"duration" url:"duration"`
+}
+
+// GetCandlesResponse is the response struct for GetCandles.
+type GetCandlesResponse struct {
+	Pair 	 string   `json:"pair"`
+	Duration int64    `json:duration`
+	Candles  []Candle `json:candles`
+}
+
+// GetCandle makes a call to get /api/exchange/1/candles.
+//
+// Update the name of an account with a given ID.
+//
+// Permissions required: <code>Perm_W_Addresses</code>
+func (cl *Client) GetCandles(ctx context.Context, req *GetCandlesRequest) (*GetCandlesResponse, error) {
+	var res GetCandlesResponse
+	err := cl.do(ctx, "GET", "/api/exchange/1/candles", req, &res, true)
+	if err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
