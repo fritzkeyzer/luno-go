@@ -322,4 +322,13 @@ type beneficiary struct {
 	Id                string `json:"id"`
 }
 
+type Candle struct{
+	Timestamp 	Time 			`json:"timestamp"`
+	Open 		decimal.Decimal `json:"open"`
+	Close		decimal.Decimal `json:"close"`
+	High		decimal.Decimal `json:"high"`
+	Low			decimal.Decimal `json:"low"`
+	Volume		decimal.Decimal `json:"volume"`
+}
+
 // vi: ft=go
