@@ -1,4 +1,4 @@
-module github.com/luno/luno-go
+module github.com/fritkeyzer/luno-go
 
 go 1.12
 
